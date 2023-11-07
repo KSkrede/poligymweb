@@ -17,7 +17,7 @@ def fetch_slots():
     global slots
     slots = get_slots(start_date_str, end_date_str, playground_id)
     
-    return redirect(url_for('index'))
+    return render_template('index.html', slots=slots)
 
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))
