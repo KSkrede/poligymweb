@@ -10,20 +10,64 @@
         <input type="submit" value="Fetch slots">
     </form>
     <table>
-        <tr>
-            <th>Slot</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Capacity</th>
-        </tr>
-        {% for index, slot_info in slots.items() %}
+        <thead>
             <tr>
-                <td>{{ index }}</td>
+                <th>Slot</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Capacity</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for slot_num, slot_info in slots.items() %}
+            <tr>
+                <td>{{ slot_num }}</td>
                 <td>{{ slot_info[0] }}</td>
                 <td>{{ slot_info[1] }}</td>
                 <td>{{ slot_info[2] }}</td>
+                <td>
+                    <button class="book-button" data-slot-num="{{ slot_num }}"
+                            data-start="{{ slot_info[0] }}" data-end="{{ slot_info[1] }}"
+                    >
+                    </button>
+                </td>
             </tr>
-        {% endfor %}
+            {% endfor %}
+        </tbody>
     </table>
+
+    <script>
+        // Add JavaScript to  handle booking
+        const bookButtons = document.querySelectorAll('.book-button');
+        bookButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const slotNum = button.dataset.slotNum;
+                const startTime = button.dataset.start;
+                const endTime = button.dataset.end;
+                const confirmBooking = confirm(`Are you sure you want to book slot ${slotNum} from ${startTime} to ${endTime}?`);
+                if (confirmBooking) {
+                    fetch('/book_slot', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            slot_num: slotNum
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(`Slot ${slotNum} booked successfully!`);
+                            window.location.reload();
+                        } else {
+                            alert(`Slot ${slotNum} could not be booked!`);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
