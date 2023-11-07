@@ -10,8 +10,8 @@ def index():
 
 @app.route('/fetch_slots', methods=['POST'])
 def fetch_slots():
-    start_date_str = "2023-11-07"
-    end_date_str = "2023-11-10"
+    start_date_str = "2023-11-08"
+    end_date_str = "2023-11-08"
     playground_id = "55"
     
     global slots
