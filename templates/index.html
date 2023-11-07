@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Polimi Gym slots</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Polimi Gym slots</h1>
+    <table>
+        <tr>
+            <th>Slot</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Capacity</th>
+        </tr>
+        {% for index, slot_info in slots.items() %}
+            <tr>
+                <td>{{ index }}</td>
+                <td>{{ slot_info[0] }}</td>
+                <td>{{ slot_info[1] }}</td>
+                <td>{{ slot_info[2] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
