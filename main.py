@@ -9,7 +9,7 @@ slots = {}
 # Define the base URL for booking
 BOOKING_URL = "https://my.sportpolimi.it/booking/book"
 
-# This function will handle the booking request
+
 def book_slot(startDate, endDate, startTime, endTime, playgroundId=55):
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -55,14 +55,14 @@ def fetch_slots():
     return render_template('index.html', slots=slots)
 
 @app.route('/book_slot', methods=['POST'])
-def book_slot():
+def book_slot_handler():
     # Retrieve the booking data from the request
     startDate = request.form.get('BookingCalendarForm[start_date]')
     endDate = request.form.get('BookingCalendarForm[end_date]')
     startTime = request.form.get('BookingCalendarForm[start_time]')
     endTime = request.form.get('BookingCalendarForm[end_time]')
 
-    # Attempt to book the slot
+    # Attempt to book the slot using the correct function
     if book_slot(startDate, endDate, startTime, endTime):
         return "Slot booked successfully!"
     else:
